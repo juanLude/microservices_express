@@ -2,14 +2,27 @@ import React, { useState } from "react";
 
 function CommentCreate({ postId }) {
   const [content, setContent] = useState("");
-
   const onSubmit = async (event) => {
     event.preventDefault();
+    try {
+      const response = await fetch(
+        `http://localhost:4001/posts/${postId}/comments`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ postId, content }),
+        }
+      );
+      if (response.ok) {
+        const jsonResponse = await response.json();
 
-    await fetch(`http://localhost:4001/posts/${postId}/comments`, {
-      method: "POST",
-      body: { content },
-    });
+        console.log(jsonResponse);
+      }
+    } catch (error) {
+      console.log(error);
+    }
 
     setContent("");
   };

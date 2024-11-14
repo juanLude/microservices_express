@@ -1,4 +1,5 @@
 import CommentCreate from "./CommentCreate";
+import CommentList from "./CommentList";
 
 export const fetchPosts = async () => {
   const response = await fetch("http://localhost:4000/posts");
@@ -17,7 +18,8 @@ function PostList({ posts }) {
   //     fetchPosts().then(setPosts);
   //   }, []);
 
-  console.log(posts);
+  // console.log(JSON.stringify(posts, null, 2));
+
   const renderedPosts = Object.values(posts).map((post) => {
     return (
       <div
@@ -27,6 +29,7 @@ function PostList({ posts }) {
       >
         <div className="card-body">
           <h3>{post.title}</h3>
+          <CommentList postId={post.id} />
           <CommentCreate postId={post.id} />
         </div>
       </div>
@@ -38,5 +41,5 @@ function PostList({ posts }) {
     </div>
   );
 }
-// change this
+
 export default PostList;
