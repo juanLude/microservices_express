@@ -19,6 +19,7 @@ function PostList({ posts }) {
   //   }, []);
 
   // console.log(JSON.stringify(posts, null, 2));
+  console.log(posts);
 
   const renderedPosts = Object.values(posts).map((post) => {
     return (

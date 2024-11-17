@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 
 function CommentList({ postId }) {
   const [comments, setComments] = useState([]);
-  const fetchComments = async (postId) => {
+  const fetchComments = async () => {
     const response = await fetch(
       `http://localhost:4001/posts/${postId}/comments`
     );
     if (response.ok) {
       const jsonResponse = await response.json();
+      console.log(jsonResponse);
       setComments(jsonResponse);
     } else {
       throw new Error("Failed to fetch comments");
@@ -17,9 +18,7 @@ function CommentList({ postId }) {
   };
   useEffect(() => {
     fetchComments();
-  }, []);
-  console.log(comments);
-
+  }, [postId]);
   return (
     <ul>
       {comments.map((comment) => (

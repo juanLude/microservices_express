@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function CommentCreate({ postId }) {
   const [content, setContent] = useState("");
@@ -26,6 +26,7 @@ function CommentCreate({ postId }) {
 
     setContent("");
   };
+
   return (
     <div>
       <form onSubmit={onSubmit}>

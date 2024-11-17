@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PostCreate from "./Components/PostCreate";
 import PostList from "./Components/PostList";
 import { fetchPosts } from "./Components/PostList";
@@ -13,13 +13,13 @@ function App() {
     }
   };
 
-  // const updateComments = async () => {
-  //   const fetchedComments = await fetchComments();
-  //   if (fetchedComments) {
-  //     setComments(fetchedComments);
-  //     console.log(fetchedComments);
-  //   }
-  // };
+  useEffect(() => {
+    updatePosts();
+  }, []);
+
+  // comments
+  console.log(posts);
+
   return (
     <div className="container">
       <h1>Create Post </h1>
