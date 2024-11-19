@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-function CommentCreate({ postId }) {
+function CommentCreate({ postId, refreshComments }) {
   const [content, setContent] = useState("");
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -17,8 +17,11 @@ function CommentCreate({ postId }) {
       );
       if (response.ok) {
         const jsonResponse = await response.json();
-
+        // onCommentCreated(jsonResponse);
         console.log(jsonResponse);
+        if (refreshComments) {
+          refreshComments(postId);
+        }
       }
     } catch (error) {
       console.log(error);

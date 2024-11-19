@@ -1,5 +1,6 @@
+import { useEffect, useState } from "react";
 import CommentCreate from "./CommentCreate";
-import CommentList from "./CommentList";
+import CommentList, { fetchComments } from "./CommentList";
 
 export const fetchPosts = async () => {
   const response = await fetch("http://localhost:4000/posts");
@@ -11,15 +12,17 @@ export const fetchPosts = async () => {
     throw new Error("Failed to fetch posts");
   }
 };
+
 function PostList({ posts }) {
-  //   const [posts, setPosts] = useState({});
+  const [refreshSignal, setRefreshSignal] = useState(0);
+  const handleNewComment = () => {
+    setRefreshSignal((prev) => prev + 1); // Increment to trigger refresh
+  };
 
-  //   useEffect(() => {
-  //     fetchPosts().then(setPosts);
-  //   }, []);
-
-  // console.log(JSON.stringify(posts, null, 2));
   console.log(posts);
+  useEffect(() => {
+    fetchComments();
+  }, []);
 
   const renderedPosts = Object.values(posts).map((post) => {
     return (
@@ -30,8 +33,8 @@ function PostList({ posts }) {
       >
         <div className="card-body">
           <h3>{post.title}</h3>
-          <CommentList postId={post.id} />
-          <CommentCreate postId={post.id} />
+          <CommentList postId={post.id} onCommentsUpdate={refreshSignal} />
+          <CommentCreate postId={post.id} refreshComments={handleNewComment} />
         </div>
       </div>
     );
