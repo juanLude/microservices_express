@@ -25,13 +25,14 @@ app.post("/posts", async (req, res) => {
   const { title } = req.body;
   posts[id] = { id, title };
 
-  // await axios.post("http://localhost:4000/posts", {
-  //   type: "PostCreated",
-  //   data: {
-  //     id,
-  //     title,
-  //   },
-  // });
+  await axios.post("http://localhost:4005/events", {
+    type: "PostCreated",
+    data: {
+      id,
+      title,
+    },
+  });
+  // 18. Emiting Events
   // new resource has been successfully created on the server
   res.status(201).send(posts[id]);
 });
