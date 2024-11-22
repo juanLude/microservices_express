@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import CommentCreate from "./CommentCreate";
-import CommentList, { fetchComments } from "./CommentList";
+import CommentList from "./CommentList";
 
 export const fetchPosts = async () => {
-  const response = await fetch("http://localhost:4000/posts");
+  const response = await fetch("http://localhost:4002/posts");
   if (response.ok) {
     const jsonResponse = await response.json();
     console.log(jsonResponse);
@@ -20,11 +20,12 @@ function PostList({ posts }) {
   };
 
   console.log(posts);
-  useEffect(() => {
-    fetchComments();
-  }, []);
+  // useEffect(() => {
+  //   fetchComments();
+  // }, []);
 
   const renderedPosts = Object.values(posts).map((post) => {
+    console.log(post.comments);
     return (
       <div
         className="card"
@@ -33,7 +34,11 @@ function PostList({ posts }) {
       >
         <div className="card-body">
           <h3>{post.title}</h3>
-          <CommentList postId={post.id} onCommentsUpdate={refreshSignal} />
+          <CommentList
+            comments={post.comments}
+            onCommentsUpdate={refreshSignal}
+            key={post.id}
+          />
           <CommentCreate postId={post.id} refreshComments={handleNewComment} />
         </div>
       </div>

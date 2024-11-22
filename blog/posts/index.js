@@ -3,27 +3,25 @@ const bodyParser = require("body-parser");
 const { randomBytes } = require("crypto");
 const cors = require("cors");
 const axios = require("axios");
+
 const app = express();
-
-// parse incoming requests with JSON payloads and make them available as req.body
 app.use(bodyParser.json());
-
-// server to listen on port 4000
-const port = 4000;
+app.use(cors());
 
 const posts = {};
 
-app.use(cors());
-
-app.get("/posts", async (req, res) => {
+app.get("/posts", (req, res) => {
   res.send(posts);
 });
 
 app.post("/posts", async (req, res) => {
   const id = randomBytes(4).toString("hex");
-  console.log(req.body.title);
   const { title } = req.body;
-  posts[id] = { id, title };
+
+  posts[id] = {
+    id,
+    title,
+  };
 
   await axios.post("http://localhost:4005/events", {
     type: "PostCreated",
@@ -32,18 +30,16 @@ app.post("/posts", async (req, res) => {
       title,
     },
   });
-  // 18. Emiting Events
-  // new resource has been successfully created on the server
+
   res.status(201).send(posts[id]);
 });
 
-app.post("/posts", (req, res) => {
+app.post("/events", (req, res) => {
   console.log("Received Event", req.body.type);
+
   res.send({});
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(4000, () => {
+  console.log("Listening on 4000");
 });
-
-module.exports = app;

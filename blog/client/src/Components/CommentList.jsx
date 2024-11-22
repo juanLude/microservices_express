@@ -1,43 +1,26 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+import React from "react";
 
-import { useEffect, useState } from "react";
-
-export const fetchComments = async (postId) => {
-  const response = await fetch(
-    `http://localhost:4001/posts/${postId}/comments`
-  );
-  if (response.ok) {
-    const jsonResponse = await response.json();
-    console.log(jsonResponse);
-    return jsonResponse;
-  } else {
-    throw new Error("Failed to fetch comments");
-  }
-};
-function CommentList({ postId, onCommentsUpdate }) {
-  const [comments, setComments] = useState([]);
-  const fetchOnCommentsUpdate = async () => {
-    try {
-      const comments = await fetchComments(postId);
-      setComments(comments);
-      console.log(comments);
-    } catch (error) {
-      console.error("Failed to fetch comments:", error);
-    }
-  };
+const CommentList = ({ comments }) => {
   console.log(comments);
+  const renderedComments = comments.map((comment) => {
+    let content;
 
-  useEffect(() => {
-    fetchOnCommentsUpdate();
-  }, [postId, onCommentsUpdate]);
+    if (comment.status === "approved") {
+      content = comment.content;
+    }
 
-  return (
-    <ul>
-      {comments.map((comment) => (
-        <li key={comment.id}>{comment.content}</li>
-      ))}
-    </ul>
-  );
-}
+    if (comment.status === "pending") {
+      content = "This comment is awaiting moderation";
+    }
+
+    if (comment.status === "rejected") {
+      content = "This comment has been rejected";
+    }
+
+    return <li key={comment.id}>{content}</li>;
+  });
+
+  return <ul>{renderedComments}</ul>;
+};
 
 export default CommentList;
