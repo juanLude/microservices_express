@@ -14,18 +14,19 @@ export const fetchPosts = async () => {
 };
 
 function PostList({ posts }) {
+  console.log(posts);
+
   const [refreshSignal, setRefreshSignal] = useState(0);
   const handleNewComment = () => {
+    console.log("handleNewComment");
     setRefreshSignal((prev) => prev + 1); // Increment to trigger refresh
   };
 
-  console.log(posts);
   // useEffect(() => {
   //   fetchComments();
   // }, []);
 
   const renderedPosts = Object.values(posts).map((post) => {
-    console.log(post.comments);
     return (
       <div
         className="card"

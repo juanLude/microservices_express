@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 function CommentCreate({ postId, refreshComments }) {
   const [content, setContent] = useState("");
+
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -19,9 +20,11 @@ function CommentCreate({ postId, refreshComments }) {
         const jsonResponse = await response.json();
         // onCommentCreated(jsonResponse);
         console.log(jsonResponse);
-        if (refreshComments) {
-          refreshComments(postId);
-        }
+        refreshComments();
+        // if (refreshComments) {
+        //   console.log("refreshComments");
+        //   refreshComments(postId);
+        // }
       }
     } catch (error) {
       console.log(error);

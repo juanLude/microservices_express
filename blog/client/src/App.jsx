@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PostCreate from "./Components/PostCreate";
 import PostList from "./Components/PostList";
 import { fetchPosts } from "./Components/PostList";
@@ -15,6 +15,9 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    updatePosts();
+  }, []);
   console.log(posts);
 
   return (
