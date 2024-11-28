@@ -13,18 +13,14 @@ export const fetchPosts = async () => {
   }
 };
 
-function PostList({ posts }) {
+function PostList({ posts, onCommentsUpdate, refreshComments }) {
   console.log(posts);
 
-  const [refreshSignal, setRefreshSignal] = useState(0);
-  const handleNewComment = () => {
-    console.log("handleNewComment");
-    setRefreshSignal((prev) => prev + 1); // Increment to trigger refresh
-  };
-
-  // useEffect(() => {
-  //   fetchComments();
-  // }, []);
+  // const [refreshSignal, setRefreshSignal] = useState(0);
+  // const handleNewComment = () => {
+  //   console.log("handleNewComment");
+  //   setRefreshSignal((prev) => prev + 1); // Increment to trigger refresh
+  // };
 
   const renderedPosts = Object.values(posts).map((post) => {
     return (
@@ -37,10 +33,10 @@ function PostList({ posts }) {
           <h3>{post.title}</h3>
           <CommentList
             comments={post.comments}
-            onCommentsUpdate={refreshSignal}
+            onCommentsUpdate={onCommentsUpdate}
             key={post.id}
           />
-          <CommentCreate postId={post.id} refreshComments={handleNewComment} />
+          <CommentCreate postId={post.id} refreshComments={refreshComments} />
         </div>
       </div>
     );

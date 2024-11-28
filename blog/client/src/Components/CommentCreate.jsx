@@ -20,7 +20,8 @@ function CommentCreate({ postId, refreshComments }) {
         const jsonResponse = await response.json();
         // onCommentCreated(jsonResponse);
         console.log(jsonResponse);
-        refreshComments();
+
+        refreshComments(postId);
         // if (refreshComments) {
         //   console.log("refreshComments");
         //   refreshComments(postId);
