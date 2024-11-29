@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: Pod
-metadata: # metadata of the pod
-  name: posts
-spec: # spec of the pod
-  containers: # containers of the pod
-    - name: posts
-      image: docker.io/juan/posts:0.0.1
