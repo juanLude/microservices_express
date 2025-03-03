@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import CommentCreate from "./CommentCreate";
 import CommentList from "./CommentList";
 
 export const fetchPosts = async () => {
-  const response = await fetch("http://localhost:4002/posts");
+  const response = await fetch("http://posts.com/posts");
   if (response.ok) {
     const jsonResponse = await response.json();
     console.log(jsonResponse);

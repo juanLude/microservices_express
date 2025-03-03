@@ -7,7 +7,7 @@ function CommentCreate({ postId, refreshComments }) {
     event.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:4001/posts/${postId}/comments`,
+        `http://posts.com/posts/${postId}/comments`,
         {
           method: "POST",
           headers: {

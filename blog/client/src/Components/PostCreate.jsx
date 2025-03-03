@@ -6,7 +6,7 @@ function PostCreate({ onPostCreated }) {
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://localhost:4000/posts", {
+      const response = await fetch("http://posts.com/posts/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
